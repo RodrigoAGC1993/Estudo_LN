@@ -1,0 +1,263 @@
+/**
+ * App Shell Layout — Canonical layout (Design §16, §19, §20B/§20C)
+ *
+ * Structure:
+ *   .app-shell (full viewport grid)
+ *     .app-header (fixed top)
+ *     .app-shell__body (main + sidebar)
+ *       .app-main (reading area)
+ *       .app-sidebar (history panel, desktop only)
+ *     .app-footer (status bar)
+ */
+
+/* === App Shell === */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === Header === */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
+}
+
+.app-header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.app-header__icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.app-header__titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-header__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header__subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.app-header__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  min-height: 44px;
+  min-width: 44px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.app-header__btn:hover {
+  border-color: var(--accent);
+}
+
+.app-header__btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* === Body (main + sidebar) === */
+
+.app-shell__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-page);
+  background: var(--bg);
+}
+
+/* === Sidebar (desktop history) === */
+
+.app-sidebar {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .app-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border);
+    background: var(--surface);
+    overflow-y: auto;
+    max-height: calc(100vh - 3.5rem - 2.5rem);
+    position: sticky;
+    top: 3.5rem;
+  }
+}
+
+/* === Footer (status bar) === */
+
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.app-footer__a11y {
+  display: none;
+}
+
+.app-footer__font-size {
+  white-space: nowrap;
+}
+
+@media (min-width: 769px) {
+  .app-footer__a11y {
+    display: inline;
+  }
+}
+
+/* === Multi-tab warning banner === */
+
+.app-shell__multi-tab-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--warning-bg, #fef3c7);
+  border-bottom: 1px solid var(--warning-border, #f59e0b);
+  color: var(--warning-text, #92400e);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.app-shell__multi-tab-warning p {
+  margin: 0;
+  flex: 1;
+}
+
+.app-shell__multi-tab-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.app-shell__multi-tab-dismiss:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.app-shell__multi-tab-dismiss:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+[data-theme='dark'] .app-shell__multi-tab-warning {
+  background: var(--warning-bg, #422006);
+  border-bottom-color: var(--warning-border, #b45309);
+  color: var(--warning-text, #fef3c7);
+}
+
+[data-theme='dark'] .app-shell__multi-tab-dismiss:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* === Mobile responsive === */
+
+@media (max-width: 768px) {
+  .app-header__subtitle {
+    display: none;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .app-header__title {
+    font-size: 0.8125rem;
+  }
+}
+
+/* === Reduced motion === */
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header__btn {
+    transition: none;
+  }
+}

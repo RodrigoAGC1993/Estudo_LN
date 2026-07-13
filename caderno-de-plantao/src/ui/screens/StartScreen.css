@@ -1,0 +1,132 @@
+/**
+ * StartScreen — Styles
+ * Uses CSS Custom Properties from variables.css
+ */
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: var(--spacing-xl) var(--spacing-page);
+  text-align: center;
+  max-width: var(--max-prose-width);
+  margin: 0 auto;
+}
+
+.start-screen__title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h1);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: 1.2;
+}
+
+.start-screen__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-xl) 0;
+  font-style: italic;
+}
+
+.start-screen__description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-xl) 0;
+  line-height: 1.6;
+}
+
+.start-screen__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 20rem;
+}
+
+.start-screen__btn {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.start-screen__btn:hover {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.start-screen__btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.start-screen__btn--primary {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.start-screen__btn--primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.start-screen__warning {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--attention);
+  background: var(--surface);
+  border: 1px solid var(--attention);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.start-screen__loading {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* === Responsive adjustments === */
+
+@media (max-width: 480px) {
+  .start-screen {
+    padding: var(--spacing-lg) var(--spacing-page);
+    min-height: 60vh;
+  }
+
+  .start-screen__actions {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .start-screen {
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+
+  .start-screen__btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}
+
+/* Reduced motion: disable transitions (Req 10.7) */
+@media (prefers-reduced-motion: reduce) {
+  .start-screen__btn {
+    transition: none;
+  }
+}

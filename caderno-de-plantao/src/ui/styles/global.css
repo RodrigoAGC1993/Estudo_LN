@@ -1,0 +1,144 @@
+/**
+ * Global Accessibility Stylesheet — WCAG 2.1 AA Compliance
+ * Requirements: 10.1–10.8
+ *
+ * Provides:
+ * - Base rem sizing (100% html font-size allows user zoom)
+ * - prefers-reduced-motion: disables all animations/transitions globally
+ * - Focus-visible fallback for all interactive elements
+ * - Box-sizing reset
+ * - Body theming via design tokens
+ * - Minimum touch target enforcement (44×44px)
+ * - Font base in rem, functional at 200% zoom / 320px viewport
+ */
+
+/* === Base Reset === */
+
+html {
+  font-size: 100%; /* Respects user browser settings; 1rem = user's chosen base */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body, 'Merriweather', Georgia, serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Focus Management ===
+ * Global fallback: visible focus ring on all interactive elements.
+ * Never suppress outline without a substitute indicator.
+ * Individual components may override with their own :focus-visible styles.
+ */
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring, #9a6500);
+  outline-offset: 2px;
+}
+
+/* Remove default focus ring for mouse/touch users, but ONLY when :focus-visible is supported */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* === Reduced Motion ===
+ * Disables ALL animations and transitions for users who prefer reduced motion.
+ * Content is revealed fully without animation (no information loss).
+ * Requirement 10.7
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === Touch Target Enforcement ===
+ * All interactive elements get a minimum 44×44px tap area.
+ * Requirement 10.3: Touch targets minimum 44×44px.
+ */
+
+button,
+[role='button'],
+a,
+input[type='checkbox'],
+input[type='radio'],
+select {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* === Screen Reader Only Utility === */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* === Overflow Prevention ===
+ * Ensures content never causes horizontal scroll at 320px minimum viewport.
+ */
+
+body {
+  overflow-x: hidden;
+}
+
+#app {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Prose containers: prevent long words from causing overflow */
+.prose,
+.beat-prose,
+.ending-screen__prose,
+.debriefing-entry__content,
+.start-screen__description {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Images and media: never overflow container */
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* === Scrollbar behavior for keyboard users === */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,40 @@
+/**
+ * SaveStatus — Discrete persistence status indicator.
+ * In canonical layout: inline in footer bar (not fixed position).
+ * Uses CSS Custom Properties from variables.css.
+ */
+
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  padding: var(--spacing-xs) 0;
+  color: var(--text-secondary);
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.save-status--saving {
+  color: var(--text-secondary);
+}
+
+.save-status--saved {
+  color: var(--text-secondary);
+}
+
+.save-status--unavailable {
+  color: var(--attention);
+}
+
+/* Hide visually when idle (saved for a while) */
+.save-status--hidden {
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .save-status {
+    transition: none;
+  }
+}

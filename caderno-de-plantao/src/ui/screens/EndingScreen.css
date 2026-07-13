@@ -1,0 +1,133 @@
+/**
+ * EndingScreen — Styles
+ * Uses CSS Custom Properties from variables.css
+ * Reading-optimized layout for ending literary prose.
+ */
+
+.ending-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 60vh;
+  padding: var(--spacing-xl) var(--spacing-page);
+  max-width: var(--max-prose-width);
+  margin: 0 auto;
+}
+
+.ending-screen__title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h1);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.ending-screen__title:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.ending-screen__prose {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  line-height: 1.8;
+  margin: 0 0 var(--spacing-xl) 0;
+  width: 100%;
+}
+
+.ending-screen__prose p {
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.ending-screen__prose p:last-child {
+  margin-bottom: 0;
+}
+
+.ending-screen__actions {
+  margin-top: var(--spacing-xl);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ending-screen__btn {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.ending-screen__btn:hover {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.ending-screen__btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ending-screen__btn--continue {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.ending-screen__btn--continue:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.ending-screen__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ending-screen__loading {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ending-screen__btn {
+    transition: none;
+  }
+}
+
+/* === Responsive adjustments === */
+
+@media (max-width: 480px) {
+  .ending-screen {
+    padding: var(--spacing-lg) var(--spacing-page);
+  }
+
+  .ending-screen__actions {
+    width: 100%;
+  }
+
+  .ending-screen__btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 320px) {
+  .ending-screen {
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+
+  .ending-screen__btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}

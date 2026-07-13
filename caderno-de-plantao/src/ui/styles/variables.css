@@ -1,0 +1,64 @@
+/**
+ * CSS Custom Properties — Theme System (ADR-12)
+ * Paleta definida no Design §20B.4/20B.5 — WCAG AA compliant
+ */
+
+:root,
+[data-theme='light'] {
+  --bg: #F5F2EA;
+  --surface: #FFFFFF;
+  --text-primary: #24272B;
+  --text-secondary: #62676E;
+  --accent: #9A6500;
+  --attention: #A8322D;
+  --border: #D6D3C8;
+  --focus-ring: #9A6500;
+}
+
+[data-theme='dark'] {
+  --bg: #0F1115;
+  --surface: #1A1D23;
+  --text-primary: #EBE9EA;
+  --text-secondary: #A3A5AA;
+  --accent: #F5C542;
+  --attention: #D9534F;
+  --border: #2A2F36;
+  --focus-ring: #F5C542;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0F1115;
+    --surface: #1A1D23;
+    --text-primary: #EBE9EA;
+    --text-secondary: #A3A5AA;
+    --accent: #F5C542;
+    --attention: #D9534F;
+    --border: #2A2F36;
+    --focus-ring: #F5C542;
+  }
+}
+
+/* Base layout tokens */
+:root {
+  --font-body: 'Merriweather', Georgia, serif;
+  --font-ui: system-ui, -apple-system, sans-serif;
+  --max-prose-width: 65ch;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+
+  /* Fluid typography — scales from 320px to ~1200px viewport */
+  --font-size-body: clamp(1.0625rem, 1rem + 0.4vw, 1.1875rem);
+  --font-size-h1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  --font-size-h2: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  --font-size-h3: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+  --font-size-small: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+
+  /* Fluid page spacing — adapts to viewport width */
+  --spacing-page: clamp(0.75rem, 2vw, 2rem);
+}

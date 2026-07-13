@@ -1,0 +1,175 @@
+/**
+ * PreferencesPanel — Appearance dropdown (canonical layout §16, §19)
+ * Requirements: RC-3.1, RC-3.2, RC-3.3, RC-3.4, RC-3.5
+ */
+
+/* Wrapper for dropdown positioning */
+.preferences-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Toggle button */
+.preferences-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  min-height: 44px;
+  min-width: 44px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  white-space: nowrap;
+}
+
+.preferences-toggle-btn:hover {
+  border-color: var(--accent);
+}
+
+.preferences-toggle-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.preferences-toggle-btn__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preferences-toggle-btn__chevron {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Panel container (dropdown) */
+.preferences-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--spacing-xs));
+  right: 0;
+  z-index: 900;
+  width: 16rem;
+  padding: var(--spacing-sm) 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-family: var(--font-ui);
+}
+
+.preferences-panel[data-open='true'] {
+  display: block;
+}
+
+/* Options list */
+.preferences-panel__options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.preferences-panel__option {
+  padding: 0;
+}
+
+.preferences-panel__option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  min-height: 44px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.preferences-panel__option-btn:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.preferences-panel__option-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.preferences-panel__option--active .preferences-panel__option-btn {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.preferences-panel__option-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.preferences-panel__option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.preferences-panel__option-label {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.preferences-panel__option-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Footer note */
+.preferences-panel__footer {
+  margin: var(--spacing-sm) var(--spacing-md) var(--spacing-xs);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--border);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* === Mobile: just show gear icon === */
+@media (max-width: 768px) {
+  .preferences-toggle-btn__label {
+    display: none;
+  }
+
+  .preferences-toggle-btn__chevron {
+    display: none;
+  }
+
+  .preferences-toggle-btn::before {
+    content: '⚙';
+    font-size: 1.125rem;
+  }
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  .preferences-toggle-btn {
+    transition: none;
+  }
+
+  .preferences-panel__option-btn {
+    transition: none;
+  }
+}

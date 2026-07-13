@@ -1,0 +1,12 @@
+/**
+ * Style Entry Point — Caderno de Plantão
+ *
+ * Import order:
+ * 1. Design tokens (CSS custom properties)
+ * 2. Global accessibility and reset styles
+ *
+ * Component-specific styles are imported by each component file.
+ */
+
+@import './variables.css';
+@import './global.css';

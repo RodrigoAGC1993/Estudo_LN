@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node", "vite/client", "vite-plugin-pwa/client"],
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "baseUrl": ".",
+    "paths": {
+      "@domain": ["src/domain/index.ts"],
+      "@domain/*": ["src/domain/*"],
+      "@content": ["src/content/index.ts"],
+      "@content/*": ["src/content/*"],
+      "@engine": ["src/engine/index.ts"],
+      "@engine/*": ["src/engine/*"],
+      "@validation": ["src/validation/index.ts"],
+      "@validation/*": ["src/validation/*"],
+      "@persistence": ["src/persistence/index.ts"],
+      "@persistence/*": ["src/persistence/*"],
+      "@composition": ["src/composition/index.ts"],
+      "@composition/*": ["src/composition/*"],
+      "@ui": ["src/ui/index.ts"],
+      "@ui/*": ["src/ui/*"],
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
+    }
+  },
+  "include": ["scripts", "src"]
+}

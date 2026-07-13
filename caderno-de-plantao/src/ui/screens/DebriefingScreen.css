@@ -1,0 +1,250 @@
+/**
+ * DebriefingScreen — Styles
+ * Uses CSS Custom Properties from variables.css
+ *
+ * Analysis categories are visually differentiated via subtle left-border
+ * indicators using CSS classes (cat-1 through cat-8). The internal names
+ * are never exposed to the user — only neutral visual cues.
+ */
+
+.debriefing-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-xl) var(--spacing-page);
+  max-width: var(--max-prose-width);
+  margin: 0 auto;
+}
+
+.debriefing-screen__title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h1);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.debriefing-screen__title:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.debriefing-screen__sections {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* === Section === */
+
+.debriefing-section {
+  width: 100%;
+}
+
+.debriefing-section__heading {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h3);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: 1.4;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--spacing-xs);
+}
+
+.debriefing-section__disclaimer {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: var(--spacing-xs) 0 var(--spacing-sm) 0;
+  line-height: 1.4;
+}
+
+/* === Entries list === */
+
+.debriefing-section__entries {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-sm) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* === Entry === */
+
+.debriefing-entry {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.debriefing-entry__content {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* === Analysis category visual indicators ===
+ * Subtle left-border color differentiation.
+ * Colors are chosen for distinguishability without relying
+ * on color alone (entries also have textual content for meaning).
+ */
+
+.debriefing-entry--cat-1 {
+  border-left-color: #4caf50; /* decisao_adequada: green tone */
+}
+
+.debriefing-entry--cat-2 {
+  border-left-color: #8bc34a; /* decisao_defensavel_incompleta: light green */
+}
+
+.debriefing-entry--cat-3 {
+  border-left-color: #ff9800; /* processo_inseguro_sem_dano: orange */
+}
+
+.debriefing-entry--cat-4 {
+  border-left-color: #f44336; /* atraso: red */
+}
+
+.debriefing-entry--cat-5 {
+  border-left-color: #9c27b0; /* omissao: purple */
+}
+
+.debriefing-entry--cat-6 {
+  border-left-color: #2196f3; /* fator_protetor: blue */
+}
+
+.debriefing-entry--cat-7 {
+  border-left-color: #607d8b; /* fator_sistemico: blue-grey */
+}
+
+.debriefing-entry--cat-8 {
+  border-left-color: #e91e63; /* decisao_critica: pink */
+}
+
+/* Dark theme adjustments for category indicators */
+[data-theme='dark'] .debriefing-entry--cat-1 {
+  border-left-color: #81c784;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-2 {
+  border-left-color: #aed581;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-3 {
+  border-left-color: #ffb74d;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-4 {
+  border-left-color: #ef5350;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-5 {
+  border-left-color: #ba68c8;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-6 {
+  border-left-color: #64b5f6;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-7 {
+  border-left-color: #90a4ae;
+}
+
+[data-theme='dark'] .debriefing-entry--cat-8 {
+  border-left-color: #f06292;
+}
+
+/* === Actions === */
+
+.debriefing-screen__actions {
+  margin-top: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 20rem;
+  align-items: center;
+}
+
+.debriefing-screen__btn {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  min-height: 44px;
+  min-width: 44px;
+  width: 100%;
+  text-align: center;
+}
+
+.debriefing-screen__btn:hover {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.debriefing-screen__btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.debriefing-screen__btn--primary {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.debriefing-screen__btn--primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.debriefing-screen__loading {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .debriefing-screen__btn {
+    transition: none;
+  }
+}
+
+/* === Responsive adjustments === */
+
+@media (max-width: 480px) {
+  .debriefing-screen {
+    padding: var(--spacing-lg) var(--spacing-page);
+  }
+
+  .debriefing-screen__actions {
+    max-width: 100%;
+  }
+
+  .debriefing-entry {
+    padding: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 320px) {
+  .debriefing-screen {
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+
+  .debriefing-screen__btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}

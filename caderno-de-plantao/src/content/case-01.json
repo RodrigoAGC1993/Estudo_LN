@@ -1,0 +1,685 @@
+{
+  "schemaVersion": "1.0.0",
+  "caseId": "caso-01-as-balas",
+  "caseVersion": "1.0.0",
+  "metadata": {
+    "title": "As Balas",
+    "playableCharacterId": "jessica-almeida",
+    "locale": "pt-BR"
+  },
+  "startNodeId": "cena-1-ecg-quente",
+  "states": [
+    {
+      "name": "tempo_atrasado",
+      "type": "integer",
+      "initialValue": 0,
+      "minimum": 0,
+      "maximum": 3
+    },
+    {
+      "name": "voltaren_comunicado",
+      "type": "boolean",
+      "initialValue": false
+    },
+    {
+      "name": "processo_heparina_seguro",
+      "type": "boolean",
+      "initialValue": false
+    },
+    {
+      "name": "vigilancia_ativa",
+      "type": "integer",
+      "initialValue": 0,
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "name": "confianca_equipe",
+      "type": "integer",
+      "initialValue": 0,
+      "minimum": -2,
+      "maximum": 2
+    },
+    {
+      "name": "acao_critica_a_tempo",
+      "type": "nullable_boolean",
+      "initialValue": null
+    }
+  ],
+  "nodes": [
+    {
+      "kind": "decision",
+      "id": "cena-1-ecg-quente",
+      "prose": "O ECG sai da impressora com um estalo seco. Eu arranco o papel ainda quente. Meus olhos descem pelo traçado e o desenho sobe onde não devia. Supra. Meu estômago afunda. O médico está ocupado. A sala inteira fala ao mesmo tempo. O papel treme na minha mão.",
+      "presentationMetadata": {
+        "title": "O Papel Quente",
+        "narrativeTime": "22h14"
+      },
+      "choices": [
+        {
+          "id": "c1-interromper-medico",
+          "label": "Interromper o médico",
+          "effects": [
+            { "target": "confianca_equipe", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-1" }
+        },
+        {
+          "id": "c1-levar-enfermeira",
+          "label": "Levar para a enfermeira",
+          "effects": [
+            { "target": "tempo_atrasado", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-1" }
+        },
+        {
+          "id": "c1-guardar-prontuario",
+          "label": "Guardar no prontuário",
+          "effects": [
+            { "target": "tempo_atrasado", "operation": "increment", "amount": 1 },
+            { "target": "confianca_equipe", "operation": "decrement", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-1" }
+        },
+        {
+          "id": "c1-repetir-ecg",
+          "label": "Repetir o ECG",
+          "effects": [
+            { "target": "tempo_atrasado", "operation": "increment", "amount": 1 },
+            { "target": "vigilancia_ativa", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-1" }
+        }
+      ],
+      "interpersonalBeatIds": ["beat-c1-neg", "beat-c1-neu", "beat-c1-pos"]
+    },
+    {
+      "kind": "progression",
+      "id": "prog-pos-cena-1",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A sala continua se movendo. O tempo não espera decisões perfeitas.",
+      "presentationMetadata": {},
+      "continuationAction": { "label": "Continuar" },
+      "transition": { "kind": "direct", "targetNodeId": "cena-2-voltaren" }
+    },
+    {
+      "kind": "decision",
+      "id": "cena-2-voltaren",
+      "prose": "A acompanhante fala sem parar. No meio da fala, surge a palavra Voltaren. Ela fica parada na minha cabeça. Ninguém pediu essa informação. A sala está cheia demais para algo pequeno — ou importante demais para ignorar.",
+      "presentationMetadata": {
+        "title": "A Palavra no Meio da Frase",
+        "narrativeTime": "22h31"
+      },
+      "choices": [
+        {
+          "id": "c2-comunicar-agora",
+          "label": "Comunicar agora",
+          "effects": [
+            { "target": "voltaren_comunicado", "operation": "set", "value": true },
+            { "target": "confianca_equipe", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-2" }
+        },
+        {
+          "id": "c2-guardar-depois",
+          "label": "Guardar para depois",
+          "effects": [
+            { "target": "tempo_atrasado", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-2" }
+        },
+        {
+          "id": "c2-minimizar",
+          "label": "Minimizar",
+          "effects": [
+            { "target": "confianca_equipe", "operation": "decrement", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-2" }
+        }
+      ],
+      "interpersonalBeatIds": ["beat-c2-neg", "beat-c2-neu", "beat-c2-pos"]
+    },
+    {
+      "kind": "progression",
+      "id": "prog-pos-cena-2",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A informação fica no ar. O plantão não para para processar.",
+      "presentationMetadata": {},
+      "continuationAction": { "label": "Continuar" },
+      "transition": { "kind": "direct", "targetNodeId": "cena-3-heparina" }
+    },
+    {
+      "kind": "decision",
+      "id": "cena-3-heparina",
+      "prose": "O armário está aberto. Dois frascos parecidos demais. O erro aqui não faz barulho quando acontece.",
+      "presentationMetadata": {
+        "title": "Dois Frascos",
+        "narrativeTime": "23h05"
+      },
+      "choices": [
+        {
+          "id": "c3-dupla-checagem",
+          "label": "Dupla checagem",
+          "effects": [
+            { "target": "processo_heparina_seguro", "operation": "set", "value": true },
+            { "target": "vigilancia_ativa", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-3" }
+        },
+        {
+          "id": "c3-fluxo-rapido",
+          "label": "Fluxo rápido",
+          "effects": [],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-3" }
+        },
+        {
+          "id": "c3-delegar",
+          "label": "Delegar",
+          "effects": [],
+          "transition": { "kind": "direct", "targetNodeId": "prog-pos-cena-3" }
+        }
+      ],
+      "interpersonalBeatIds": ["beat-c3-neg", "beat-c3-neu", "beat-c3-pos"]
+    },
+    {
+      "kind": "progression",
+      "id": "prog-pos-cena-3",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A seringa está pronta. O plantão segue.",
+      "presentationMetadata": {},
+      "continuationAction": { "label": "Continuar" },
+      "transition": { "kind": "direct", "targetNodeId": "cena-4-ele-dormiu" }
+    },
+    {
+      "kind": "decision",
+      "id": "cena-4-ele-dormiu",
+      "prose": "O paciente para de gemer. A sala relaxa. Eu olho o monitor. A frequência caiu. A pressão está baixa. O apito fica mais espaçado. Isso não parece sono.",
+      "presentationMetadata": {
+        "title": "Ele Dormiu?",
+        "narrativeTime": "01h42"
+      },
+      "choices": [
+        {
+          "id": "c4-chamar-ajuda",
+          "label": "Chamar ajuda",
+          "effects": [
+            { "target": "acao_critica_a_tempo", "operation": "set", "value": true }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-consequencia-final" }
+        },
+        {
+          "id": "c4-confirmar-antes",
+          "label": "Confirmar antes",
+          "effects": [
+            { "target": "acao_critica_a_tempo", "operation": "set", "value": true },
+            { "target": "tempo_atrasado", "operation": "increment", "amount": 1 }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-consequencia-final" }
+        },
+        {
+          "id": "c4-seguir-fluxo",
+          "label": "Seguir o fluxo",
+          "effects": [
+            { "target": "acao_critica_a_tempo", "operation": "set", "value": false }
+          ],
+          "transition": { "kind": "direct", "targetNodeId": "prog-consequencia-final" }
+        }
+      ],
+      "interpersonalBeatIds": ["beat-c4-neg", "beat-c4-neu", "beat-c4-pos"]
+    },
+    {
+      "kind": "progression",
+      "id": "prog-consequencia-final",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O que foi feito — ou deixado de fazer — agora tem peso. O plantão chega ao seu ponto de inflexão.",
+      "presentationMetadata": {
+        "title": "Consequências"
+      },
+      "continuationAction": { "label": "Continuar" },
+      "transition": { "kind": "direct", "targetNodeId": "outcome-resolution" }
+    },
+    {
+      "kind": "outcome_resolution",
+      "id": "outcome-resolution"
+    },
+    {
+      "kind": "ending",
+      "id": "ending-node-tragico",
+      "endingId": "ending-tragico",
+      "presentationMetadata": { "title": "Desfecho" },
+      "continuationAction": { "label": "Ver debriefing" },
+      "nextNodeId": "debriefing-node-tragico"
+    },
+    {
+      "kind": "ending",
+      "id": "ending-node-grave",
+      "endingId": "ending-grave",
+      "presentationMetadata": { "title": "Desfecho" },
+      "continuationAction": { "label": "Ver debriefing" },
+      "nextNodeId": "debriefing-node-grave"
+    },
+    {
+      "kind": "ending",
+      "id": "ending-node-excelente",
+      "endingId": "ending-excelente",
+      "presentationMetadata": { "title": "Desfecho" },
+      "continuationAction": { "label": "Ver debriefing" },
+      "nextNodeId": "debriefing-node-excelente"
+    },
+    {
+      "kind": "ending",
+      "id": "ending-node-bom",
+      "endingId": "ending-bom",
+      "presentationMetadata": { "title": "Desfecho" },
+      "continuationAction": { "label": "Ver debriefing" },
+      "nextNodeId": "debriefing-node-bom"
+    },
+    {
+      "kind": "debriefing",
+      "id": "debriefing-node-tragico",
+      "debriefingId": "debriefing-tragico",
+      "presentationMetadata": { "title": "Debriefing — Análise do Caso" }
+    },
+    {
+      "kind": "debriefing",
+      "id": "debriefing-node-grave",
+      "debriefingId": "debriefing-grave",
+      "presentationMetadata": { "title": "Debriefing — Análise do Caso" }
+    },
+    {
+      "kind": "debriefing",
+      "id": "debriefing-node-excelente",
+      "debriefingId": "debriefing-excelente",
+      "presentationMetadata": { "title": "Debriefing — Análise do Caso" }
+    },
+    {
+      "kind": "debriefing",
+      "id": "debriefing-node-bom",
+      "debriefingId": "debriefing-bom",
+      "presentationMetadata": { "title": "Debriefing — Análise do Caso" }
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending-tragico",
+      "name": "tragico",
+      "evaluationOrder": 1,
+      "condition": {
+        "op": "and",
+        "conditions": [
+          { "op": "eq", "state": "acao_critica_a_tempo", "value": false },
+          { "op": "eq", "state": "vigilancia_ativa", "value": 0 },
+          {
+            "op": "or",
+            "conditions": [
+              { "op": "gte", "state": "tempo_atrasado", "value": 2 },
+              { "op": "eq", "state": "processo_heparina_seguro", "value": false }
+            ]
+          }
+        ]
+      },
+      "prose": "O monitor silencia. Eu entendo onde tudo começou a escapar."
+    },
+    {
+      "id": "ending-grave",
+      "name": "grave",
+      "evaluationOrder": 2,
+      "condition": {
+        "op": "and",
+        "conditions": [
+          { "op": "eq", "state": "acao_critica_a_tempo", "value": false },
+          {
+            "op": "not",
+            "condition": {
+              "op": "and",
+              "conditions": [
+                { "op": "eq", "state": "vigilancia_ativa", "value": 0 },
+                {
+                  "op": "or",
+                  "conditions": [
+                    { "op": "gte", "state": "tempo_atrasado", "value": 2 },
+                    { "op": "eq", "state": "processo_heparina_seguro", "value": false }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "prose": "UTI prolongada. A pergunta 'ele não tinha melhorado?' fica no ar."
+    },
+    {
+      "id": "ending-excelente",
+      "name": "excelente",
+      "evaluationOrder": 3,
+      "condition": {
+        "op": "and",
+        "conditions": [
+          { "op": "eq", "state": "acao_critica_a_tempo", "value": true },
+          { "op": "lte", "state": "tempo_atrasado", "value": 1 },
+          { "op": "eq", "state": "processo_heparina_seguro", "value": true },
+          { "op": "eq", "state": "voltaren_comunicado", "value": true }
+        ]
+      },
+      "prose": "Meses depois, uma buzina. Um aceno. Eu lembro dele. E aprendo que confiar no incômodo salva."
+    },
+    {
+      "id": "ending-bom",
+      "name": "bom",
+      "evaluationOrder": 4,
+      "condition": {
+        "op": "and",
+        "conditions": [
+          { "op": "eq", "state": "acao_critica_a_tempo", "value": true },
+          {
+            "op": "not",
+            "condition": {
+              "op": "and",
+              "conditions": [
+                { "op": "lte", "state": "tempo_atrasado", "value": 1 },
+                { "op": "eq", "state": "processo_heparina_seguro", "value": true },
+                { "op": "eq", "state": "voltaren_comunicado", "value": true }
+              ]
+            }
+          }
+        ]
+      },
+      "prose": "Sobrevive. Quase-evento. Aprendo a não confirmar demais."
+    }
+  ],
+  "debriefings": [
+    {
+      "id": "debriefing-tragico",
+      "endingId": "ending-tragico",
+      "outcomeFragmentId": "frag-desfecho-tragico",
+      "fragmentIds": [
+        "frag-percepcao-omissao-ecg",
+        "frag-risco-heparina-insegura",
+        "frag-risco-voltaren-omitido",
+        "frag-aprendizado-acao-critica",
+        "frag-revisao-clinica-geral"
+      ],
+      "closingFragmentId": "frag-encerramento-tragico"
+    },
+    {
+      "id": "debriefing-grave",
+      "endingId": "ending-grave",
+      "outcomeFragmentId": "frag-desfecho-grave",
+      "fragmentIds": [
+        "frag-percepcao-omissao-ecg",
+        "frag-protecao-vigilancia",
+        "frag-risco-voltaren-omitido",
+        "frag-aprendizado-acao-critica",
+        "frag-revisao-clinica-geral"
+      ],
+      "closingFragmentId": "frag-encerramento-grave"
+    },
+    {
+      "id": "debriefing-excelente",
+      "endingId": "ending-excelente",
+      "outcomeFragmentId": "frag-desfecho-excelente",
+      "fragmentIds": [
+        "frag-percepcao-comunicacao-eficaz",
+        "frag-protecao-heparina-segura",
+        "frag-protecao-voltaren-comunicado",
+        "frag-protecao-vigilancia",
+        "frag-revisao-clinica-geral"
+      ],
+      "closingFragmentId": "frag-encerramento-excelente"
+    },
+    {
+      "id": "debriefing-bom",
+      "endingId": "ending-bom",
+      "outcomeFragmentId": "frag-desfecho-bom",
+      "fragmentIds": [
+        "frag-percepcao-comunicacao-eficaz",
+        "frag-risco-heparina-insegura",
+        "frag-risco-voltaren-omitido",
+        "frag-protecao-vigilancia",
+        "frag-aprendizado-tempo",
+        "frag-revisao-clinica-geral"
+      ],
+      "closingFragmentId": "frag-encerramento-bom"
+    }
+  ],
+  "debriefingFragments": [
+    {
+      "id": "frag-desfecho-tragico",
+      "section": "desfecho",
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O desfecho trágico revela uma cadeia de omissões que se acumularam sem intervenção."
+    },
+    {
+      "id": "frag-desfecho-grave",
+      "section": "desfecho",
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O desfecho grave mostra que a vigilância parcial não foi suficiente para compensar a falha crítica."
+    },
+    {
+      "id": "frag-desfecho-excelente",
+      "section": "desfecho",
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O desfecho excelente demonstra como a atenção ativa em cada etapa converge para um cuidado seguro."
+    },
+    {
+      "id": "frag-desfecho-bom",
+      "section": "desfecho",
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O desfecho bom mostra que a ação crítica correta compensou parcialmente outros gaps no processo."
+    },
+    {
+      "id": "frag-percepcao-omissao-ecg",
+      "section": "percepcao",
+      "sourceChoiceIds": ["c1-guardar-prontuario", "c1-levar-enfermeira"],
+      "analysisCategory": "atraso",
+      "condition": { "op": "gte", "state": "tempo_atrasado", "value": 1 },
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O atraso na comunicação do ECG introduziu tempo perdido no manejo do paciente."
+    },
+    {
+      "id": "frag-percepcao-comunicacao-eficaz",
+      "section": "percepcao",
+      "sourceChoiceIds": ["c1-interromper-medico"],
+      "analysisCategory": "decisao_adequada",
+      "condition": { "op": "eq", "state": "confianca_equipe", "value": 2 },
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A comunicação assertiva desde o início construiu confiança e agilizou o fluxo de decisões."
+    },
+    {
+      "id": "frag-risco-heparina-insegura",
+      "section": "risco",
+      "sourceChoiceIds": ["c3-fluxo-rapido", "c3-delegar"],
+      "analysisCategory": "processo_inseguro_sem_dano",
+      "condition": { "op": "eq", "state": "processo_heparina_seguro", "value": false },
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O processo de preparo da heparina sem dupla checagem representa um risco sistêmico silencioso."
+    },
+    {
+      "id": "frag-risco-voltaren-omitido",
+      "section": "risco",
+      "sourceChoiceIds": ["c2-guardar-depois", "c2-minimizar"],
+      "analysisCategory": "omissao",
+      "condition": { "op": "eq", "state": "voltaren_comunicado", "value": false },
+      "priority": 2,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A informação sobre o Voltaren, não comunicada, permaneceu como risco oculto durante toda a evolução do caso."
+    },
+    {
+      "id": "frag-protecao-heparina-segura",
+      "section": "protecao",
+      "sourceChoiceIds": ["c3-dupla-checagem"],
+      "analysisCategory": "fator_protetor",
+      "condition": { "op": "eq", "state": "processo_heparina_seguro", "value": true },
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A dupla checagem da heparina eliminou uma fonte de erro potencialmente grave."
+    },
+    {
+      "id": "frag-protecao-voltaren-comunicado",
+      "section": "protecao",
+      "sourceChoiceIds": ["c2-comunicar-agora"],
+      "analysisCategory": "fator_protetor",
+      "condition": { "op": "eq", "state": "voltaren_comunicado", "value": true },
+      "priority": 2,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A comunicação do Voltaren permitiu ajuste da conduta e eliminou uma interação medicamentosa de risco."
+    },
+    {
+      "id": "frag-protecao-vigilancia",
+      "section": "protecao",
+      "analysisCategory": "fator_protetor",
+      "condition": { "op": "gte", "state": "vigilancia_ativa", "value": 1 },
+      "priority": 3,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A postura de vigilância ativa contribuiu para detectar sinais de deterioração mais cedo."
+    },
+    {
+      "id": "frag-aprendizado-acao-critica",
+      "section": "aprendizado",
+      "sourceChoiceIds": ["c4-seguir-fluxo"],
+      "analysisCategory": "decisao_critica",
+      "condition": { "op": "eq", "state": "acao_critica_a_tempo", "value": false },
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A ausência de ação no momento crítico é o ponto onde a cadeia de eventos se torna irreversível."
+    },
+    {
+      "id": "frag-aprendizado-tempo",
+      "section": "aprendizado",
+      "analysisCategory": "atraso",
+      "condition": { "op": "gte", "state": "tempo_atrasado", "value": 2 },
+      "priority": 2,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O acúmulo de atrasos demonstra como pequenas hesitações comprometem o desfecho final."
+    },
+    {
+      "id": "frag-revisao-clinica-geral",
+      "section": "revisao_clinica",
+      "priority": 1,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Revisão clínica: IAM com supra de ST, manejo de anticoagulação, interações medicamentosas com AINEs, reconhecimento de deterioração hemodinâmica."
+    },
+    {
+      "id": "frag-encerramento-tragico",
+      "section": "aprendizado",
+      "priority": 99,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Este caso demonstra como a falha em múltiplas barreiras de segurança pode levar a um desfecho irreversível. Cada ponto de decisão era uma oportunidade de interromper a cadeia."
+    },
+    {
+      "id": "frag-encerramento-grave",
+      "section": "aprendizado",
+      "priority": 99,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O dano foi significativo mas não irreversível. Identificar os pontos onde a intervenção foi possível é o primeiro passo para evitar recorrência."
+    },
+    {
+      "id": "frag-encerramento-excelente",
+      "section": "aprendizado",
+      "priority": 99,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Este caso ilustra como uma postura ativa, comunicação assertiva e verificação sistemática convergem para o melhor desfecho possível."
+    },
+    {
+      "id": "frag-encerramento-bom",
+      "section": "aprendizado",
+      "priority": 99,
+      "content": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O desfecho foi positivo, mas houve oportunidades perdidas. Cada uma delas é um ponto de aprendizado para o próximo plantão."
+    }
+  ],
+  "interpersonalBeats": [
+    {
+      "id": "beat-c1-neg",
+      "sourceNodeId": "cena-1-ecg-quente",
+      "band": "negative",
+      "bandCondition": { "op": "lte", "state": "confianca_equipe", "value": -1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A enfermeira mais velha olha de soslaio. Ninguém diz nada, mas o silêncio tem peso."
+    },
+    {
+      "id": "beat-c1-neu",
+      "sourceNodeId": "cena-1-ecg-quente",
+      "band": "neutral",
+      "bandCondition": { "op": "eq", "state": "confianca_equipe", "value": 0 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O plantão segue. Ninguém notou nada de diferente."
+    },
+    {
+      "id": "beat-c1-pos",
+      "sourceNodeId": "cena-1-ecg-quente",
+      "band": "positive",
+      "bandCondition": { "op": "gte", "state": "confianca_equipe", "value": 1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Um aceno discreto do médico. Não é agradecimento — é reconhecimento."
+    },
+    {
+      "id": "beat-c2-neg",
+      "sourceNodeId": "cena-2-voltaren",
+      "band": "negative",
+      "bandCondition": { "op": "lte", "state": "confianca_equipe", "value": -1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A técnica ao lado murmura algo. O tom não é de ajuda."
+    },
+    {
+      "id": "beat-c2-neu",
+      "sourceNodeId": "cena-2-voltaren",
+      "band": "neutral",
+      "bandCondition": { "op": "eq", "state": "confianca_equipe", "value": 0 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Ninguém percebeu a hesitação. O plantão absorve tudo."
+    },
+    {
+      "id": "beat-c2-pos",
+      "sourceNodeId": "cena-2-voltaren",
+      "band": "positive",
+      "bandCondition": { "op": "gte", "state": "confianca_equipe", "value": 1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. O médico anota sem interromper. Boa. Simples assim."
+    },
+    {
+      "id": "beat-c3-neg",
+      "sourceNodeId": "cena-3-heparina",
+      "band": "negative",
+      "bandCondition": { "op": "lte", "state": "confianca_equipe", "value": -1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A farmacêutica confere depois. O olhar diz 'de novo você'."
+    },
+    {
+      "id": "beat-c3-neu",
+      "sourceNodeId": "cena-3-heparina",
+      "band": "neutral",
+      "bandCondition": { "op": "eq", "state": "confianca_equipe", "value": 0 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A rotina continua. Nenhuma reação visível."
+    },
+    {
+      "id": "beat-c3-pos",
+      "sourceNodeId": "cena-3-heparina",
+      "band": "positive",
+      "bandCondition": { "op": "gte", "state": "confianca_equipe", "value": 1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A colega confere junto sem que eu peça. Confiança construída."
+    },
+    {
+      "id": "beat-c4-neg",
+      "sourceNodeId": "cena-4-ele-dormiu",
+      "band": "negative",
+      "bandCondition": { "op": "lte", "state": "confianca_equipe", "value": -1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. Quando chamo, ninguém se move imediatamente. A credibilidade já estava corroída."
+    },
+    {
+      "id": "beat-c4-neu",
+      "sourceNodeId": "cena-4-ele-dormiu",
+      "band": "neutral",
+      "bandCondition": { "op": "eq", "state": "confianca_equipe", "value": 0 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A equipe responde no ritmo padrão. Sem pressa extra, sem demora."
+    },
+    {
+      "id": "beat-c4-pos",
+      "sourceNodeId": "cena-4-ele-dormiu",
+      "band": "positive",
+      "bandCondition": { "op": "gte", "state": "confianca_equipe", "value": 1 },
+      "timing": "immediate",
+      "prose": "[PROVISÓRIO] Conteúdo provisório — aguardando prosa canônica final. A equipe se move antes de eu terminar a frase. Confiam no meu alerta."
+    }
+  ],
+  "editorialReferences": ["Rotas_As_Balas.md", "Modelo_Tom_escrita.md"],
+  "editorialReviewStatus": "draft",
+  "clinicalReviewStatus": "pending",
+  "provisionalContent": [
+    "prog-pos-cena-1: prosa provisória — aguardando transição canônica",
+    "prog-pos-cena-2: prosa provisória — aguardando transição canônica",
+    "prog-pos-cena-3: prosa provisória — aguardando transição canônica",
+    "prog-consequencia-final: prosa provisória — aguardando transição canônica",
+    "interpersonalBeats: todos provisórios — aguardando prosa canônica (lacuna B.*)",
+    "debriefingFragments: todos provisórios — aguardando conteúdo pedagógico final (lacuna B.*)"
+  ]
+}

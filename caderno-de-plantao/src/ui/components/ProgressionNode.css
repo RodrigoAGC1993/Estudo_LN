@@ -1,0 +1,166 @@
+/**
+ * ProgressionNode styles — within reading card (canonical layout)
+ * Uses CSS custom properties from variables.css
+ * Requirements: 9.1, 9.3, 10.7
+ */
+
+.progression-node {
+  width: 100%;
+}
+
+.progression-node__title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  line-height: 1.3;
+}
+
+.progression-node__title:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.progression-node__title--sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Allow focus styles to still appear for sr-only heading */
+.progression-node__title--sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 0 var(--spacing-md) 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+.progression-node__prose {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.progression-node__prose p {
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.progression-node__prose p:last-child {
+  margin-bottom: 0;
+}
+
+.progression-node__beat {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--border);
+  padding-left: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+  font-style: italic;
+}
+
+.progression-node__beat p {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.progression-node__beat p:last-child {
+  margin-bottom: 0;
+}
+
+.progression-node__actions {
+  margin-top: var(--spacing-xl);
+  display: flex;
+  justify-content: center;
+}
+
+.progression-node__continue-btn {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--surface);
+  background-color: var(--accent);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 2rem;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.progression-node__continue-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.progression-node__continue-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.progression-node__continue-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Progressive reveal animation */
+.progression-node__prose,
+.progression-node__beat {
+  animation: progression-reveal 0.4s ease-out;
+}
+
+@keyframes progression-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect prefers-reduced-motion (Req 10.7) */
+@media (prefers-reduced-motion: reduce) {
+  .progression-node__prose,
+  .progression-node__beat {
+    animation: none;
+  }
+
+  .progression-node__continue-btn {
+    transition: none;
+  }
+}
+
+/* === Responsive adjustments === */
+
+@media (max-width: 480px) {
+  .progression-node__actions {
+    width: 100%;
+  }
+
+  .progression-node__continue-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .progression-node__continue-btn {
+    padding: 0.625rem var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}

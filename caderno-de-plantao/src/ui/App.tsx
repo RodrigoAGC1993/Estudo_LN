@@ -3,7 +3,7 @@
  * Design §16, §19, §20B (canonical layout)
  */
 
-import { useEffect, useState, useCallback } from 'preact/hooks'
+import { useEffect, useState, useCallback, useMemo } from 'preact/hooks'
 import { useHashRoute } from './hooks/use-hash-route'
 import { useGameStore } from './store'
 import { applyTheme, applyFontScale, subscribeToSystemThemeChanges } from './theme'
@@ -37,17 +37,17 @@ export function App() {
   const showGameUI = route === 'playing' || route === 'ending' || route === 'debriefing'
 
   // Build a minimal history presentation for the HistoryPanel
-  const historyPresentation: HistoryPresentation = useGameStore((s) => {
-    return {
-      entries: [],
-      currentPosition: {
-        nodeId: s.currentPresentation?.nodeId ?? '',
-        title: s.currentPresentation?.presentationMetadata?.title ?? '',
-        narrativeTime: '',
-        status: 'in_progress' as const,
-      },
-    }
-  })
+  const currentNodeId = useGameStore((s) => s.currentPresentation?.nodeId ?? '')
+  const currentTitle = useGameStore((s) => s.currentPresentation?.presentationMetadata?.title ?? '')
+  const historyPresentation: HistoryPresentation = useMemo(() => ({
+    entries: [],
+    currentPosition: {
+      nodeId: currentNodeId,
+      title: currentTitle,
+      narrativeTime: '',
+      status: 'in_progress' as const,
+    },
+  }), [currentNodeId, currentTitle])
 
   const toggleHistory = useCallback(() => setHistoryOpen((prev) => !prev), [])
   const closeHistory = useCallback(() => setHistoryOpen(false), [])

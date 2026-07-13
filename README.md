@@ -1,69 +1,87 @@
 # Caderno de Plantão
 
-## Subtítulo
+*Histórias que não cabem no prontuário.*
 
-Histórias que não cabem no prontuário.
+**[Jogar agora →](https://rodrigoagc1993.github.io/Estudo_LN/)**
 
-## Definição do produto
+## O que é
 
 Caderno de Plantão é uma experiência narrativa clínica gamificada para estudantes e profissionais em início de carreira nas áreas de enfermagem e medicina.
 
-O produto combina narrativa em estilo light novel, decisões clínicas sob pressão, consequências interpessoais e múltiplos desfechos determinados pelo estado acumulado das escolhas.
+O produto combina narrativa em estilo light novel, decisões clínicas sob pressão, consequências interpessoais e múltiplos desfechos determinados pelo estado acumulado das escolhas do jogador.
+
+## Caso 01 — As Balas
+
+O MVP implementa o primeiro caso completo:
+
+- Personagem jogável: Jéssica (técnica de enfermagem, primeiro plantão)
+- 4 cenas narrativas com decisões clínicas
+- 4 classes de desfecho (trágico, grave, bom, excelente)
+- Debriefing final com análise das escolhas
+- Salvamento automático no navegador
 
 ## Objetivo pedagógico
 
-O sistema não deve testar apenas conhecimento técnico básico.
+O sistema testa competências além do conhecimento técnico:
 
-Ele deve testar:
+- Percepção de informações inseridas no ruído narrativo
+- Priorização e comunicação
+- Vigilância e segurança do paciente
+- Trabalho em equipe
+- Tomada de decisão sob pressão
+- Reconhecimento tardio da cadeia causal de um erro
 
-- percepção de informações inseridas no ruído narrativo;
-- priorização;
-- comunicação;
-- vigilância;
-- segurança do paciente;
-- trabalho em equipe;
-- tomada de decisão sob pressão;
-- reconhecimento tardio da cadeia causal de um erro.
+## Stack técnica
 
-## Caso inicial do MVP
+| Camada | Tecnologia |
+|--------|-----------|
+| UI | Preact + Zustand |
+| Build | Vite + TypeScript |
+| Testes | Vitest + fast-check (property-based) |
+| Deploy | GitHub Pages (branch `gh-pages`) |
+| CI/CD | GitHub Actions |
 
-O MVP deve implementar apenas:
+Arquitetura em 7 camadas: Domain → Content → Engine → Persistence → Validation → UI → Composition.
 
-- Caso 01 — As Balas;
-- personagem jogável: Jéssica;
-- cenas e escolhas previstas no documento canônico;
-- quatro classes de desfecho;
-- debriefing final;
-- salvamento local de progresso.
+## Estrutura do repositório
+
+```
+├── caderno-de-plantao/     # Aplicação (código-fonte, testes, build)
+├── Casos/                  # Light novel completa (LV 2.0, rotas)
+├── Documentacao/canon/     # Bíblia do projeto, modelo de tom, personagens
+├── .github/workflows/      # CI/CD pipeline
+└── .kiro/specs/            # Spec de desenvolvimento (requirements, design, tasks)
+```
+
+## Desenvolvimento local
+
+```bash
+cd caderno-de-plantao
+npm install
+npm run dev        # servidor local em http://localhost:5173
+npm run test       # rodar testes (408 specs)
+npm run build      # build de produção em dist/
+npm run validate   # validação estrutural do caso JSON
+```
 
 ## Documentos canônicos
 
-A ordem de precedência é:
+Ordem de precedência em caso de conflito:
 
-1. Bíblia do Projeto v2: regras gerais obrigatórias;
-2. Cena-modelo “Ele dormiu?”: referência obrigatória de tom e estrutura;
-3. LV completo do Caso 01: conteúdo e lógica do primeiro caso.
+1. **Bíblia do Projeto v2** — regras gerais obrigatórias
+2. **Cena-modelo "Ele dormiu?"** — referência de tom e estrutura
+3. **LV completo do Caso 01** — conteúdo e lógica específicos
 
-Em caso de conflito:
+## Restrições de design
 
-- a Bíblia v2 prevalece nas regras gerais;
-- a cena-modelo prevalece no estilo narrativo;
-- o LV do caso prevalece nos dados específicos do Caso 01.
-
-## Restrições
-
-- Não reescrever automaticamente a narrativa canônica.
-- Não simplificar as escolhas.
-- Não transformar a experiência em quiz.
-- Não utilizar cores como único indicador de significado.
-- Não mostrar variáveis internas ao jogador durante a história.
-- Não apresentar uma opção como obviamente correta.
-- Não gerar conteúdo clínico novo durante a execução.
-- Não depender de chamadas a um modelo de IA para executar uma partida.
-- Não implementar outros casos no primeiro MVP.
+- Não reescrever a narrativa canônica
+- Não simplificar as escolhas
+- Não transformar a experiência em quiz
+- Não mostrar variáveis internas ao jogador
+- Não apresentar uma opção como obviamente correta
+- Não depender de IA para executar uma partida
+- Acessibilidade WCAG 2.1 AA obrigatória
 
 ## Princípio central
 
-A informação clínica aparece dentro da narrativa.
-
-O jogador deve perceber, decidir e somente no final compreender de forma explícita a cadeia causal de suas escolhas.
+> A informação clínica aparece dentro da narrativa. O jogador deve perceber, decidir e somente no final compreender a cadeia causal de suas escolhas.
